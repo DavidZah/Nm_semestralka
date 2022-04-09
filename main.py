@@ -6,8 +6,7 @@ import matplotlib.pyplot as plt
 
 const = 50
 
-
-def momentum_gradient_descend(start,n_steps=2000,step_size = 0.001,epsilon = 0.001,momentum = 0.9):
+def momentum_gradient_descend(start,n_steps=10000,step_size = 0.001,epsilon = 0.001,momentum = 0.9):
     epsilon=epsilon*step_size
     path = []
     old_vals = []
@@ -21,7 +20,7 @@ def momentum_gradient_descend(start,n_steps=2000,step_size = 0.001,epsilon = 0.0
         old_change=change
         change = step_size*np.array(fcn_non_lin_grad(pos))+momentum*old_change
         old_pos = pos
-        pos = pos-change
+        pos = pos+change
 
         path.append(pos)
         if(np.allclose(old_pos,pos,rtol=epsilon)):
@@ -32,20 +31,15 @@ def momentum_gradient_descend(start,n_steps=2000,step_size = 0.001,epsilon = 0.0
 
 
 def fcn_non_lin(x):
-    """
     lin_part = x[0]*x[0]+x[1]*x[1]
     sin_part = const*np.sin(x[0])+const*np.cos(x[1])
     ret = lin_part+sin_part+const
-    """
-    ret = x[0]*x[0]+x[1]*x[1]
     return ret
 
 def fcn_non_lin_grad(x):
-    """
+
     ret = np.array([2*x[0]+const*np.cos(x[0]),-2*x[1]*const*np.sin(x[1])])
     ret = ret*-1
-    """
-    ret = [2*x[0],2*x[1]]
 
     return ret
 
@@ -67,7 +61,7 @@ def simple_gradient_desend_non_lin(start,n_steps=1000,step_size = 0.001,epsilon 
     print(pos)
     plot_2D_grad_desced_non_lin(path)
 
-def plot_2D_grad_desced_non_lin(path,size=[-20,20],step = 0.1):
+def plot_2D_grad_desced_non_lin(path,size=[-5,5],step = 0.1):
 
     mat = []
     X = []
@@ -178,5 +172,5 @@ if __name__ == "__main__":
     #simple_gradient_desend(A,b,np.array([10,8]))
 
     #simple_gradient_desend_non_lin([5,5])
-    momentum_gradient_descend([20,20])
+    momentum_gradient_descend([5,5])
     print("done")
