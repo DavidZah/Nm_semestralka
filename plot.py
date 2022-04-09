@@ -1,18 +1,12 @@
-from mpl_toolkits import mplot3d
 import numpy as np
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 
-# defining surface and axes
-x = np.outer(np.linspace(-2, 2, 10), np.ones(10))
-y = x.copy().T
-z = np.cos(x + y )
+x = np.arange(1, 10)
+y = x.reshape(-1, 1)
+h = x * y
 
-fig = plt.figure()
-
-# syntax for 3-D plotting
-ax = plt.axes(projection='3d')
-
-# syntax for plotting
-ax.plot_surface(x, y, z, cmap='viridis', edgecolor='green')
-ax.set_title('Surface plot geeks for geeks')
-plt.show()
+cs = plt.contourf(h, levels=[10, 30, 50],
+    colors=['#808080', '#A0A0A0', '#C0C0C0'], extend='both')
+cs.cmap.set_over('red')
+cs.cmap.set_under('blue')
+cs.changed()
