@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-const = 50
+const = 5
 
 def momentum_gradient_descend(start,n_steps=10000,step_size = 0.001,epsilon = 0.001,momentum = 0.9):
     epsilon=epsilon*step_size
