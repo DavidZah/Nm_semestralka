@@ -43,7 +43,7 @@ def fcn_non_lin_grad(x):
 
     return ret
 
-def simple_gradient_desend_non_lin(start,n_steps=1000,step_size = 0.001,epsilon = 0.001):
+def simple_gradient_desend_non_lin(start,n_steps=10000,step_size = 0.01,epsilon = 0.000001):
     epsilon=epsilon*step_size
     path = []
     old_vals = []
@@ -102,6 +102,9 @@ def plot_2D_grad_desced_non_lin(path,size=[-5,5],step = 0.1):
 
 
 
+
+
+
 def fcn_quat_grad(A,b,x):
     A_part = 0.5*(np.linalg.multi_dot([np.transpose(A),x]))
     B_part = 0.5*(np.linalg.multi_dot([A,x]))
@@ -148,7 +151,7 @@ def plot_2D_grad_desced(path,A,b,size=[-20,20]):
     ax.plot_surface(x,y, mat,alpha = 0.7)
     plt.show()
 
-def simple_gradient_desend(A,b,start,n_steps=100,step_size = 0.1,epsilon = 0.01):
+def simple_gradient_desend(A,b,start,n_steps=2000,step_size = 0.05,epsilon = 0.001):
     path = []
     pos = start
 
@@ -159,8 +162,9 @@ def simple_gradient_desend(A,b,start,n_steps=100,step_size = 0.1,epsilon = 0.01)
         pos = pos + direction
         pos = pos[0]
         path.append(pos)
-        if(np.allclose(old_pos,pos,rtol=epsilon)):
-            break
+        #if(np.allclose(old_pos,pos,rtol=epsilon)):
+
+            #break
     print(pos)
     plot_2D_grad_desced(path,A,b,size=[-10,10])
 
@@ -171,6 +175,6 @@ if __name__ == "__main__":
 
     #simple_gradient_desend(A,b,np.array([10,8]))
 
-    #simple_gradient_desend_non_lin([5,5])
-    momentum_gradient_descend([5,5])
+    simple_gradient_desend_non_lin([3,5])
+    #momentum_gradient_descend([5,5])
     print("done")

@@ -117,4 +117,5 @@ if __name__ == "__main__":
 
     netowrk.use(mse, mse_prime)
 
-    netowrk.fit(x_train, y_train, epochs=1000, learning_rate=0.1)
+    netowrk.fit(x_train, y_train, epochs=50, learning_rate=0.01)
+    print(netowrk.predict([[1,0]]))
