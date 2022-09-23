@@ -1,4 +1,7 @@
+import random
+import matplotlib.pyplot as plt
 import numpy as np
+
 class Layer:
     def __init__(self,size,input_size=None):
         if input_size == None:
@@ -28,6 +31,22 @@ def mse(y_true, y_pred):
 
 def mse_prime(y_true, y_pred):
     return 2*(y_pred-y_true)/y_true.size;
+
+
+class ActivationLayer(Layer):
+    def __init__(self, activation, activation_prime):
+        self.activation = activation
+        self.activation_prime = activation_prime
+
+    # return the activation input
+    def forward_propagation(self, input_data):
+        self.input = input_data
+        self.output = self.activation(self.input)
+        return (self.output)
+
+    # return input_error = dE/dX for a given output_error=dE/dY
+    def backward_propagation(self, output_error, learning_rate):
+        return (self.activation_prime(self.input) * output_error)
 
 class Netowrk:
     def __init__(self,learnig_rate = 0.1):
@@ -101,19 +120,37 @@ class Netowrk:
 
 
 
+def make_dataset():
+    x_data = []
+    y_data = []
+    for i in range(100):
+        x_data.append([random.randint(0,10),random.randint(0,10)])
+        y_data.append([0,1])
+        x_data.append([random.randint(10, 15), random.randint(10, 15)])
+        y_data.append([1, 0])
 
+    for index,i in enumerate(x_data):
+        if y_data[index] == [0,1]:
+            plt.plot(i[0],i[1],"ro")
+        else:
+            plt.plot(i[0], i[1],"bo")
+    return x_data,y_data
 if __name__ == "__main__":
+    x_data,y_data = make_dataset()
+
     netowrk = Netowrk()
     netowrk.set_input(2)
-    for i in range(3):
+    netowrk.add_layer(ActivationLayer(mse,mse_prime))
+    for i in range(1):
         size = netowrk.get_last_layer_size()
         netowrk.add_layer(Layer(3,size))
+        netowrk.add_layer(ActivationLayer(mse, mse_prime))
     size = netowrk.get_last_layer_size()
-    netowrk.add_layer(Layer(1,size))
+    netowrk.add_layer(Layer(2,size))
     print("done")
 
-    x_train = np.array([[[0, 0]], [[0, 1]], [[1, 0]], [[1, 1]]])
-    y_train = np.array([[[0]], [[1]], [[1]], [[0]]])
+    x_train = np.array(x_data)
+    y_train = np.array(y_data)
 
     netowrk.use(mse, mse_prime)
 

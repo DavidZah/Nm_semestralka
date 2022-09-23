@@ -4,9 +4,9 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-const = 5
+const = 50
 
-def momentum_gradient_descend(start,n_steps=10000,step_size = 0.001,epsilon = 0.001,momentum = 0.9):
+def momentum_gradient_descend(start,n_steps=10000,step_size = 0.001,epsilon = 0.001,momentum = 0.99):
     epsilon=epsilon*step_size
     path = []
     old_vals = []
@@ -38,7 +38,7 @@ def fcn_non_lin(x):
 
 def fcn_non_lin_grad(x):
 
-    ret = np.array([2*x[0]+const*np.cos(x[0]),-2*x[1]*const*np.sin(x[1])])
+    ret = np.array([2*x[0]+const*np.cos(x[0]),2*x[1]-const*np.sin(x[1])])
     ret = ret*-1
 
     return ret
